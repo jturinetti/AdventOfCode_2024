@@ -5,7 +5,7 @@
 4. (OPTIONAL) Start virtual environment (\venv\Scripts\activate) if using one
 
 # INSTALLED PACKAGES
-- advent-of-code-data (https://pypi.org/project/advent-of-code-data/)
+- aocd / advent-of-code-data (https://pypi.org/project/advent-of-code-data/)
 - pytest
 - pytest-timeout
 - shapely
