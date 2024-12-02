@@ -2,17 +2,20 @@ import time
 import logging
 from my_utils import read_aoc_data
 
-# solution functions
-def part_a(input):
+def prepare_lists(input):
     list1 = []
     list2 = []
     for n in range(len(input)):
         splitnums = input[n].split('  ')
         list1.append(int(splitnums[0]))
-        list2.append(int(splitnums[1]))
-    
+        list2.append(int(splitnums[1]))    
     list1.sort()
     list2.sort()
+    return list1, list2
+
+# solution functions
+def part_a(input):
+    list1, list2 = prepare_lists(input)
     sum = 0
     for n in range(len(input)):
         sum = sum + abs(list1[n] - list2[n])
@@ -20,32 +23,12 @@ def part_a(input):
     return sum
 
 def part_b(input):
-    list1 = []
-    list2 = []
-
-    for n in range(len(input)):
-        splitnums = input[n].split('  ')
-        list1.append(int(splitnums[0]))
-        list2.append(int(splitnums[1]))
-    
-    list1.sort()
-    list2.sort()
+    list1, list2 = prepare_lists(input)
 
     sum = 0
-    index2 = 0
-    
-    # for n in range(len(input)):
-    #     count = 0        
-    #     while index2 < 1000 and list2[index2] <= list1[n]:
-    #         if list1[n] == list2[index2]:
-    #             count = count + 1
-    #         index2 = index2 + 1
-    #     index2 = index2 + 1
-
-    #     sum = sum + list1[n] * count
-    
     for n in range(len(input)):
         count = 0
+        # brute force =/
         for k in range(len(input)):
             if list1[n] == list2[k]:
                 count = count + 1
