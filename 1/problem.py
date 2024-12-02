@@ -1,6 +1,5 @@
 import time
 import logging
-from utils import *
 from my_utils import read_aoc_data
 
 # solution functions
