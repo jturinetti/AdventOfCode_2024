@@ -1,7 +1,6 @@
 import time
 import logging
 import re
-from utils import *
 from my_utils import read_aoc_data
 
 def algo(input, regex):
