@@ -22,8 +22,7 @@ def part_a(input):
 # SAXAMASAAA
 # MAMMMXMMMM
 # MXMXAXMASX'''
-    
-    grid = parse_multi_line_input(input)
+    # grid = parse_multi_line_input(input)
     xmas_count = 0
     row_count = len(grid)
     for row in range(len(grid)):
