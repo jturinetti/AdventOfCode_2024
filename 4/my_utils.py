@@ -27,17 +27,45 @@ def flatten_grid_rows(grid):
 def grid_string(grid):
     return '\n' + '\n'.join([''.join([item for item in row]) for row in grid])
 
-def up_one(coordinate):
-    return (max(coordinate[0] - 1, 0), coordinate[1])
+def up_x(coordinate, x):
+    return (max(coordinate[0] - x, 0), coordinate[1])
 
-def down_one(coordindate, row_count):
-    return (min(coordindate[0] + 1, row_count - 1), coordindate[1])
+def up_one(coordinate):
+    return up_x(coordinate, 1)
+
+def down_x(coordinate, row_count, x):
+    return (min(coordinate[0] + x, row_count - 1), coordinate[1])
+
+def down_one(coordinate, row_count):
+    return down_x(coordinate, row_count, 1)
+
+def left_x(coordinate, x):
+    return (coordinate[0], max(coordinate[1] - x, 0))
 
 def left_one(coordinate):
-    return (coordinate[0], max(coordinate[1] - 1, 0))
+    return left_x(coordinate, 1)
+
+def right_x(coordinate, col_count, x):
+    return (coordinate[0], min(coordinate[1] + x, col_count - 1))
 
 def right_one(coordinate, col_count):
-    return (coordinate[0], min(coordinate[1] + 1, col_count - 1))
+    return right_x(coordinate, col_count, 1)
+
+def upleft_x(coordinate, x):
+    l = left_x(coordinate, x)
+    return up_x(l, x)
+
+def upright_x(coordinate, col_count, x):
+    r = right_x(coordinate, col_count, x)
+    return up_x(r, x)
+
+def downleft_x(coordinate, row_count, x):
+    l = left_x(coordinate, x)
+    return down_x(l, row_count, x)
+
+def downright_x(coordinate, row_count, col_count, x):
+    r = right_x(coordinate, col_count, x)
+    return down_x(r, row_count, x)
 
 # shape utilities
 # determines corner coordinates around an arbitrary shape from a list of coordinates
