@@ -5,103 +5,94 @@ from my_utils import *
 def check_letter(grid, coord, letter):
     return grid[coord[0]][coord[1]] == letter
 
-def check_for_target(grid, coord, target_letter, target_word):
+def check_xmas(grid, coord):
     row = coord[0]
     col = coord[1]
 
-    if grid[row][col] != target_letter:
+    if grid[row][col] != 'X':
+        return 0
+    
+    row_count = len(grid)
+    col_count = len(grid[0])
+    
+    xmas_count = 0
+    # check all directions
+    # X -> right
+    if check_letter(grid, right_x(coord, col_count, 1), 'M') and check_letter(grid, right_x(coord, col_count, 2), 'A') and check_letter(grid, right_x(coord, col_count, 3), 'S'):
+        xmas_count = xmas_count + 1
+    # left <- X
+    if check_letter(grid, left_x(coord, 1), 'M') and check_letter(grid, left_x(coord, 2), 'A') and check_letter(grid, left_x(coord, 3), 'S'):
+        xmas_count = xmas_count + 1
+    # X ^ up
+    if check_letter(grid, up_x(coord, 1), 'M') and check_letter(grid, up_x(coord, 2), 'A') and check_letter(grid, up_x(coord, 3), 'S'):
+        xmas_count = xmas_count + 1
+    # X down
+    if check_letter(grid, down_x(coord, row_count, 1), 'M') and check_letter(grid, down_x(coord, row_count, 2), 'A') and check_letter(grid, down_x(coord, row_count, 3), 'S'):
+        xmas_count = xmas_count + 1
+    # 4 diagonal checks
+    # upleft
+    if row >= 3 and col >= 3:                
+        if check_letter(grid, upleft_x(coord, 1), 'M') and check_letter(grid, upleft_x(coord, 2), 'A') and check_letter(grid, upleft_x(coord, 3), 'S'):
+            xmas_count = xmas_count + 1
+    # upright
+    if row >= 3 and col < col_count - 3:
+        if check_letter(grid, upright_x(coord, col_count, 1), 'M') and check_letter(grid, upright_x(coord, col_count, 2), 'A') and check_letter(grid, upright_x(coord, col_count, 3), 'S'):
+            xmas_count = xmas_count + 1
+    # downleft
+    if row < row_count - 3 and col >= 3:
+        if check_letter(grid, downleft_x(coord, row_count, 1), 'M') and check_letter(grid, downleft_x(coord, row_count, 2), 'A') and check_letter(grid, downleft_x(coord, row_count, 3), 'S'):
+            xmas_count = xmas_count + 1
+    # downright
+    if row < row_count - 3 and col < col_count - 3:
+        if check_letter(grid, downright_x(coord, row_count, col_count, 1), 'M') and check_letter(grid, downright_x(coord, row_count, col_count, 2), 'A') and check_letter(grid, downright_x(coord, row_count, col_count, 3), 'S'):
+            xmas_count = xmas_count + 1
+
+    return xmas_count
+
+def check_mas(grid, coord):
+    row = coord[0]
+    col = coord[1]
+
+    if grid[row][col] != 'A':
         return 0
     
     row_count = len(grid)
     col_count = len(grid[0])
 
-    if target_word == 'XMAS':
-        xmas_count = 0
-        # check all directions
-        # X -> right
-        if check_letter(grid, right_x(coord, col_count, 1), 'M') and check_letter(grid, right_x(coord, col_count, 2), 'A') and check_letter(grid, right_x(coord, col_count, 3), 'S'):
-            xmas_count = xmas_count + 1
-        # left <- X
-        if check_letter(grid, left_x(coord, 1), 'M') and check_letter(grid, left_x(coord, 2), 'A') and check_letter(grid, left_x(coord, 3), 'S'):
-            xmas_count = xmas_count + 1
-        # X ^ up
-        if check_letter(grid, up_x(coord, 1), 'M') and check_letter(grid, up_x(coord, 2), 'A') and check_letter(grid, up_x(coord, 3), 'S'):
-            xmas_count = xmas_count + 1
-        # X down
-        if check_letter(grid, down_x(coord, row_count, 1), 'M') and check_letter(grid, down_x(coord, row_count, 2), 'A') and check_letter(grid, down_x(coord, row_count, 3), 'S'):
-            xmas_count = xmas_count + 1
-        # 4 diagonal checks
-        # upleft
-        if row >= 3 and col >= 3:                
-            if check_letter(grid, upleft_x(coord, 1), 'M') and check_letter(grid, upleft_x(coord, 2), 'A') and check_letter(grid, upleft_x(coord, 3), 'S'):
-                xmas_count = xmas_count + 1
-        # upright
-        if row >= 3 and col < col_count - 3:
-            if check_letter(grid, upright_x(coord, col_count, 1), 'M') and check_letter(grid, upright_x(coord, col_count, 2), 'A') and check_letter(grid, upright_x(coord, col_count, 3), 'S'):
-                xmas_count = xmas_count + 1
-        # downleft
-        if row < row_count - 3 and col >= 3:
-            if check_letter(grid, downleft_x(coord, row_count, 1), 'M') and check_letter(grid, downleft_x(coord, row_count, 2), 'A') and check_letter(grid, downleft_x(coord, row_count, 3), 'S'):
-                xmas_count = xmas_count + 1
-        # downright
-        if row < row_count - 3 and col < col_count - 3:
-            if check_letter(grid, downright_x(coord, row_count, col_count, 1), 'M') and check_letter(grid, downright_x(coord, row_count, col_count, 2), 'A') and check_letter(grid, downright_x(coord, row_count, col_count, 3), 'S'):
-                xmas_count = xmas_count + 1
-
-        return xmas_count
-    
-    if target_word == 'MAS':
-        mas_count = 0
-        if row >= 1 and row < row_count - 1 and col >= 1 and col < col_count - 1:
-            # stupid, yet effective
-            if check_letter(grid, upleft_x(coord, 1), 'S') and check_letter(grid, downleft_x(coord, row_count, 1), 'S'):
-                # check right side for M
-                if check_letter(grid, upright_x(coord, col_count, 1), 'M') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'M'):
-                    mas_count = mas_count + 1
-            
-            if check_letter(grid, upleft_x(coord, 1), 'S') and check_letter(grid, upright_x(coord, col_count, 1), 'S'):
-                # check bottom for M
-                if check_letter(grid, downleft_x(coord, row_count, 1), 'M') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'M'):
-                    mas_count = mas_count + 1                
-            
-            if check_letter(grid, upright_x(coord, col_count, 1), 'S') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'S'):
-                # check left side for M
-                if check_letter(grid, upleft_x(coord, 1), 'M') and check_letter(grid, downleft_x(coord, row_count, 1), 'M'):
-                    mas_count = mas_count + 1
-            
-            if check_letter(grid, downleft_x(coord, row_count, 1), 'S') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'S'):
-                # check top for M
-                if check_letter(grid, upleft_x(coord, 1), 'M') and check_letter(grid, upright_x(coord, col_count, 1), 'M'):
-                    mas_count = mas_count + 1
+    mas_count = 0
+    if row >= 1 and row < row_count - 1 and col >= 1 and col < col_count - 1:
+        # stupid, yet effective
+        if check_letter(grid, upleft_x(coord, 1), 'S') and check_letter(grid, downleft_x(coord, row_count, 1), 'S'):
+            # check right side for M
+            if check_letter(grid, upright_x(coord, col_count, 1), 'M') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'M'):
+                mas_count = mas_count + 1
         
-        return mas_count
+        if check_letter(grid, upleft_x(coord, 1), 'S') and check_letter(grid, upright_x(coord, col_count, 1), 'S'):
+            # check bottom for M
+            if check_letter(grid, downleft_x(coord, row_count, 1), 'M') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'M'):
+                mas_count = mas_count + 1                
+        
+        if check_letter(grid, upright_x(coord, col_count, 1), 'S') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'S'):
+            # check left side for M
+            if check_letter(grid, upleft_x(coord, 1), 'M') and check_letter(grid, downleft_x(coord, row_count, 1), 'M'):
+                mas_count = mas_count + 1
+        
+        if check_letter(grid, downleft_x(coord, row_count, 1), 'S') and check_letter(grid, downright_x(coord, row_count, col_count, 1), 'S'):
+            # check top for M
+            if check_letter(grid, upleft_x(coord, 1), 'M') and check_letter(grid, upright_x(coord, col_count, 1), 'M'):
+                mas_count = mas_count + 1
     
-    return 0
+    return mas_count
 
 # solution functions
 def part_a(input):
     grid = expand_grid_rows(input)    
-    # print(grid)
     
-    # test input
-#     input = '''
-# MMMSXXMASM
-# MSAMXMSMSA
-# AMXSXMAAMM
-# MSAMASMSMX
-# XMASAMXAMM
-# XXAMMXXAMA
-# SMSMSASXSS
-# SAXAMASAAA
-# MAMMMXMMMM
-# MXMXAXMASX'''
-    # grid = parse_multi_line_input(input)
-
     xmas_count = 0
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             coord = (row, col)
-            xmas_count = xmas_count + check_for_target(grid, coord, 'X', 'XMAS')
+            xmas_count = xmas_count + check_xmas(grid, coord)
             
     return xmas_count
 
@@ -112,7 +103,7 @@ def part_b(input):
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             coord = (row, col)
-            counter = counter + check_for_target(grid, coord, 'A', 'MAS')
+            counter = counter + check_mas(grid, coord)
             
     return counter
 
