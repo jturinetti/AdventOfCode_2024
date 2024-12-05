@@ -25,7 +25,7 @@ def part_a(input):
             page = pages[pi]
             other_pages = pages[pi+1:]
             
-            # 75|47 should either be found, or 47|75 should NOT be found, or it should not exist
+            # ex. if comparing 75 and 47, 47|75 should NOT be found, or it should not exist
             for page_to_check in other_pages:
                 rule = (page_to_check, page)
                 if rule in rules:
@@ -53,32 +53,37 @@ def part_b(input):
         rules.append((int(split_val[0]), int(split_val[1])))
         i = i + 1
     i = i + 1
-    valid = True
+    found_invalid = False
     while i < len(input):
         pages = [int(x) for x in input[i].split(',')]
-        valid = True
-        for pi in range(len(pages) - 1):
-            # for each page, check that it doesn't break any rules or return
-            # get all rules for number
-            # loop over remaining pages
-            # ensure that (x,y) page pairings do not conflict with all rules for page p
+        found_invalid = False
+        pi = 0
+        while pi < len(pages) - 1:
             page = pages[pi]
             other_pages = pages[pi+1:]
             
             for page_to_check in other_pages:
                 rule = (page_to_check, page)
                 if rule in rules:
-                    print('NOT VALID due to rule {}'.format(rule))
-                    valid = False
-                    break        
+                    print('NOT VALID due to rule {}, swapping'.format(rule))
+                    # swap values that match the offending rule
+                    p1i = pages.index(page_to_check)
+                    p2i = pages.index(page)
+                    temp = pages[p1i]
+                    pages[p1i] = pages[p2i]
+                    pages[p2i] = temp
+                    # reset index
+                    pi = -1
+                    found_invalid = True
+                    break     
+            pi = pi + 1
         
-        if (not valid):
+        if (found_invalid):
             invalid_pages.append(pages)
         
         i = i + 1
 
     sum = 0
-    # TODO: reorder invalid pages to work with rules
     for vp in invalid_pages:
         middle = vp[int(len(vp) / 2)]
         sum = sum + middle
@@ -90,10 +95,10 @@ def execute():
     logging.info('part_a answer: {}'.format(part_a(input_data)))
     end_time = time.perf_counter()
     logging.info(f"part_a perf: {(end_time - start_time):02f}s")
-    # start_time = time.perf_counter()
-    # logging.info('part_b answer: {}'.format(part_b(input_data)))
-    # end_time = time.perf_counter()
-    # logging.info(f"part_b perf: {(end_time - start_time):02f}s")
+    start_time = time.perf_counter()
+    logging.info('part_b answer: {}'.format(part_b(input_data)))
+    end_time = time.perf_counter()
+    logging.info(f"part_b perf: {(end_time - start_time):02f}s")
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, 
