@@ -45,6 +45,9 @@ def left_x(coordinate, x):
 def left_one(coordinate):
     return left_x(coordinate, 1)
 
+def left_one_unsafe(coordinate):
+    return (coordinate[0], coordinate[1] - 1)
+
 def right_x(coordinate, col_count, x):
     return (coordinate[0], min(coordinate[1] + x, col_count - 1))
 
