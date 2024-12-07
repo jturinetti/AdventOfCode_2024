@@ -112,6 +112,7 @@ def part_b(orig_input):
                 counter = counter + 1
                 traverse_position(input, current)
             else:
+                # TODO: fix this
                 loop_counter = loop_counter + 1
 
     return loop_counter
