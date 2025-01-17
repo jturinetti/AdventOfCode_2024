@@ -27,6 +27,12 @@ def flatten_grid_rows(grid):
 def grid_string(grid):
     return '\n' + '\n'.join([''.join([item for item in row]) for row in grid])
 
+def get_grid_value(input, coordinate, typef = None):
+    v = input[coordinate[0]][coordinate[1]]
+    if typef != None:
+        return typef(v)
+    return v
+
 def up_x(coordinate, x):
     return (max(coordinate[0] - x, 0), coordinate[1])
 

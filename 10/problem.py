@@ -1,12 +1,51 @@
 import time
 import logging
 from utils import *
-from my_utils import read_aoc_data
+from my_utils import *
+
+cache = []
+
+def score_trailhead(input, current_coord, starting_coord):
+    current_val = get_grid_value(input, current_coord, int)
+
+    # check up/right/left/down  
+    funcs = [up_one, down_one, right_one, left_one]
+    args = [None, len(input), len(input[0]), None]
+    next_step_coords = []
+    for f_index in range(len(funcs)):
+        f = funcs[f_index]
+        f_args = args[f_index]
+        next_coord = ()
+        if f_args == None:
+            next_coord = f(current_coord)
+        else:
+            next_coord = f(current_coord, f_args)
+        val_being_checked = get_grid_value(input, next_coord)
+        if val_being_checked != '.' and int(val_being_checked) == current_val + 1:
+            next_step_coords.append(next_coord)
+    
+    # if none match check_for_val, return 0
+    # if one matches check_for_val, return score_trailhead(input, coord of match)
+    # if two or more match, return sum of all score_trailhead(input, coord of match)
+    sum = 0
+    for c in next_step_coords:
+        if get_grid_value(input, c, int) == 9 and (starting_coord, c) not in cache:
+            cache.append((starting_coord, c))
+            sum = sum + 1
+        else:
+           sum = sum + score_trailhead(input, c, starting_coord)
+    
+    return sum
 
 # solution functions
 def part_a(input):
-    # TODO
-    return
+    score = 0
+    for row in range(len(input)):
+        for i in range(len(input[row])):
+            digit = (input[row][i])
+            if digit == '0':
+                score = score + score_trailhead(input, (row, i), (row, i))
+    return score
 
 def part_b(input):
     # TODO
