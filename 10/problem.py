@@ -3,9 +3,7 @@ import logging
 from utils import *
 from my_utils import *
 
-cache = []
-
-def score_trailhead(input, current_coord, starting_coord):
+def score_trailhead(input, current_coord, starting_coord, cache):
     current_val = get_grid_value(input, current_coord, int)
 
     # check up/right/left/down  
@@ -29,11 +27,12 @@ def score_trailhead(input, current_coord, starting_coord):
     # if two or more match, return sum of all score_trailhead(input, coord of match)
     sum = 0
     for c in next_step_coords:
-        if get_grid_value(input, c, int) == 9 and (starting_coord, c) not in cache:
-            cache.append((starting_coord, c))
+        if get_grid_value(input, c, int) == 9 and (cache == None or (starting_coord, c) not in cache):
+            if cache != None:
+                cache.append((starting_coord, c))
             sum = sum + 1
         else:
-           sum = sum + score_trailhead(input, c, starting_coord)
+           sum = sum + score_trailhead(input, c, starting_coord, cache)
     
     return sum
 
@@ -44,12 +43,17 @@ def part_a(input):
         for i in range(len(input[row])):
             digit = (input[row][i])
             if digit == '0':
-                score = score + score_trailhead(input, (row, i), (row, i))
+                score = score + score_trailhead(input, (row, i), (row, i), [])
     return score
 
 def part_b(input):
-    # TODO
-    return
+    score = 0
+    for row in range(len(input)):
+        for i in range(len(input[row])):
+            digit = (input[row][i])
+            if digit == '0':
+                score = score + score_trailhead(input, (row, i), (row, i), None)
+    return score
 
 def execute():
     input_data = read_aoc_data(10, 2024)    # replace with correct day and year
