@@ -4,6 +4,11 @@ from aocd import get_data   # to retrieve puzzle inputs
 from shapely.geometry import Point
 from shapely.geometry import Polygon
 
+# wrapper to call aocd api to retrieve input for day and year
+def read_aoc_data(day, year):
+    problem_data = get_data(day=day, year=year)
+    return problem_data.splitlines()
+
 # file parsing utilities
 def read_input_file(filename):
     input_file = open(filename, 'r')
@@ -121,8 +126,3 @@ def shoelace(path):
 # returns i + b from equation
 def picks(path, perimeter):
   return shoelace(path) + (perimeter / 2.0) + 1
-
-# wrapper to call aocd api to retrieve input for day and year
-def read_aoc_data(day, year):
-    problem_data = get_data(day=day, year=year)
-    return problem_data.splitlines()

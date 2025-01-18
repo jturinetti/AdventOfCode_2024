@@ -4,6 +4,11 @@ from aocd import get_data   # to retrieve puzzle inputs
 from shapely.geometry import Point
 from shapely.geometry import Polygon
 
+# wrapper to call aocd api to retrieve input for day and year
+def read_aoc_data(day, year):
+    problem_data = get_data(day=day, year=year)
+    return problem_data.splitlines()
+
 # file parsing utilities
 def read_input_file(filename):
     input_file = open(filename, 'r')
@@ -26,6 +31,12 @@ def flatten_grid_rows(grid):
 
 def grid_string(grid):
     return '\n' + '\n'.join([''.join([item for item in row]) for row in grid])
+
+def get_grid_value(input, coordinate, typef = None):
+    v = input[coordinate[0]][coordinate[1]]
+    if typef != None:
+        return typef(v)
+    return v
 
 def up_x(coordinate, x):
     return (max(coordinate[0] - x, 0), coordinate[1])
@@ -115,8 +126,3 @@ def shoelace(path):
 # returns i + b from equation
 def picks(path, perimeter):
   return shoelace(path) + (perimeter / 2.0) + 1
-
-# wrapper to call aocd api to retrieve input for day and year
-def read_aoc_data(day, year):
-    problem_data = get_data(day=day, year=year)
-    return problem_data.splitlines()

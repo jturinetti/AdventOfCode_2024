@@ -1,19 +1,18 @@
 import time
 import logging
-from utils import *
-from my_utils import read_aoc_data
+from my_utils import *
 
 # solution functions
 def part_a(input):
     # TODO
-    return
+    pass
 
 def part_b(input):
     # TODO
-    return
+    pass
 
 def execute():
-    input_data = read_aoc_data(1, 2024)    # replace with correct day and year
+    input_data = read_aoc_data(10, 2024)    # replace with correct day and year
     start_time = time.perf_counter()
     logging.info('part_a answer: {}'.format(part_a(input_data)))
     end_time = time.perf_counter()
