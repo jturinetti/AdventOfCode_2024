@@ -1,6 +1,5 @@
 import time
 import logging
-from utils import *
 from my_utils import *
 
 def score_trailhead(input, current_coord, starting_coord, cache):
