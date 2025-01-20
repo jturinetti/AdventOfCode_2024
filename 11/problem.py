@@ -22,7 +22,7 @@ def process_blink(stones, next_stones, index, cache):
 def part_a(input):
     stones = [int(n) for n in input[0].split()]   
     sindex = 0
-    blinks = 75
+    blinks = 25
     cache = {}
     
     for blink in range(blinks):
